@@ -96,6 +96,15 @@ source .venv/bin/activate
 
 
 ### Install dependencies
+
+#### PyTorch Installation
+
+Install PyTorch separately based on your system.
+
+For CUDA 12.1:
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+
+Then install remaining dependencies:
 pip install -r requirements.txt
 
 
@@ -108,7 +117,6 @@ python run_all.py
 
 
 ### Run individual phases (Windows)
-scripts\run_phase0.bat
 scripts\run_phase1a.bat
 scripts\run_phase1b.bat
 scripts\run_phase1c.bat
