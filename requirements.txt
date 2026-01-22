@@ -1,5 +1,6 @@
-torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+torch
+torchvision
 numpy
 matplotlib
 scikit-learn
-python-docx   # optional, if you keep doc generation code
+python-docx
