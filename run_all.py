@@ -11,7 +11,6 @@ CHECKPOINTS = os.path.join(ROOT, "checkpoints")
 os.makedirs(RESULTS, exist_ok=True)
 os.makedirs(CHECKPOINTS, exist_ok=True)
 
-
 def run(cmd):
     print(f"\n>>> Running: {cmd}")
     r = subprocess.run(cmd, shell=True, cwd=SRC)
@@ -21,7 +20,10 @@ def run(cmd):
 timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
 outdir = os.path.join(RESULTS, timestamp)
 checkpoints = os.path.join(CHECKPOINTS, timestamp)
+
 os.makedirs(outdir, exist_ok=True)
+os.makedirs(checkpoints, exist_ok=True)
+
 
 # PHASE-1A (MNIST)
 run("python train.py")
@@ -32,6 +34,7 @@ for fname in ["accuracy_1a.pt", "confidence_1a.pt"]:
     srcf = os.path.join(SRC, fname)
     if os.path.exists(srcf):
         os.replace(srcf, os.path.join(outdir, fname))
+
 # move embeddings and figures
 for f in os.listdir(SRC):
     if f.startswith("emb_epoch_") or f.endswith(".png"):
@@ -45,7 +48,7 @@ run("python extract_embeddings_phase1b.py")
 run("python plots_phase1b.py")
 # collect outputs
 for f in os.listdir(SRC):
-    if f.startswith("cifar_emb_epoch_") or f.endswith(".png") or f.startswith("confidence_1b.pt"):
+    if f.startswith("cifar_emb_epoch_") or f.endswith(".png") or f.startswith("confidence_1b.pt") or f.startswith("cifar_accuracy"):
         try:
             os.replace(os.path.join(SRC, f), os.path.join(outdir, f))
         except FileNotFoundError:
@@ -62,7 +65,7 @@ run("python extract_embeddings_phase1c_resnet.py")
 run("python plots_phase1c.py")
 # collect outputs
 for f in os.listdir(SRC):
-    if f.startswith("resnet_emb_epoch_") or f.endswith(".png") or f.startswith("confidence_1c.pt"):
+    if f.startswith("resnet_emb_epoch_") or f.endswith(".png") or f.startswith("confidence_1c.pt") or f.startswith("resnet_accuracy"):
         try:
             os.replace(os.path.join(SRC, f), os.path.join(outdir, f))
         except FileNotFoundError:
